@@ -32,26 +32,11 @@
         <exclude name="AtLeastOneConstructor"/>
         <exclude name="MethodArgumentCouldBeFinal"/>
         <exclude name="LocalVariableCouldBeFinal"/>
+        <exclude name="LongVariable"/>
         <exclude name="OnlyOneReturn"/>
         <exclude name="ConfusingTernary"/>
         <exclude name="CallSuperInConstructor"/>
-    </rule>
-
-    <rule ref="category/java/codestyle.xml/ShortVariable">
-        <properties>
-            <property name="xpath">
-                <value>
-                    <![CDATA[
-                        //VariableDeclaratorId[string-length(@Image) < $minimum]
-                            [not(lower-case(@Image)='id')]
-                            [not(../../..[self::ForInit])]
-                            [not(../../..[self::ForStatement])]
-                            [not(../..[self::CatchStatement])]
-                            [not(parent::LambdaExpression or ../../..[self::LambdaExpression])]
-                    ]]>
-                </value>
-            </property>
-        </properties>
+        <exclude name="ShortClassName"/>
     </rule>
 
     <rule ref="category/java/design.xml">
@@ -64,18 +49,13 @@
     </rule>
 
     <rule ref="category/java/errorprone.xml">
+        <exclude name="AvoidLiteralsInIfCondition"/>
         <exclude name="NullAssignment"/>
         <exclude name="SimpleDateFormatNeedsLocale"/>
         <exclude name="NonStaticInitializer"/>
         <exclude name="DataflowAnomalyAnalysis"/>
         <exclude name="BeanMembersShouldSerialize"/>
         <exclude name="MissingSerialVersionUID"/>
-    </rule>
-
-    <rule ref="category/java/errorprone.xml/AvoidLiteralsInIfCondition">
-        <properties>
-            <property name="ignoreMagicNumbers" value="-1,0,1"/>
-        </properties>
     </rule>
 
     <rule ref="category/java/errorprone.xml/EmptyInitializer">
