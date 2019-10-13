@@ -2,8 +2,13 @@ package com.gfranke.duedate;
 
 import com.gfranke.duedate.util.InvalidDateException;
 import com.gfranke.duedate.util.TimeUnit;
+import com.gfranke.duedate.validate.SubmitDateValidator;
+import com.gfranke.duedate.validate.TurnaroundTimeValidator;
+import mockit.Expectations;
+import mockit.Mocked;
 import mockit.Tested;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,6 +24,31 @@ class CalculateDueDateTest {
 
     @Tested
     private CalculateDueDate testedObject;
+
+    @Test
+    void calculate_invalidBySubmitTimeValidator_error(@Mocked SubmitDateValidator validator) throws InvalidDateException {
+        new Expectations() {{
+            validator.validate(INPUT);
+            result = new InvalidDateException("");
+        }};
+
+        Assertions.assertThrows(InvalidDateException.class, () -> {
+            testedObject.calculate(INPUT, null);
+        });
+    }
+
+    @Test
+    void calculate_invalidByTurnaroundTimeValidator_error(@Mocked TurnaroundTimeValidator validator) throws InvalidDateException {
+        TurnaroundTime inputTurnaroundTime = new TurnaroundTime(TimeUnit.HOUR, 1L);
+        new Expectations() {{
+            validator.validate(inputTurnaroundTime);
+            result = new InvalidDateException("");
+        }};
+
+        Assertions.assertThrows(InvalidDateException.class, () -> {
+            testedObject.calculate(INPUT, inputTurnaroundTime);
+        });
+    }
 
     @ParameterizedTest
     @ArgumentsSource(CalculationArgumentsProvider.class)
