@@ -14,6 +14,8 @@
 ## Usage
 
 The module can be imported into other Maven module as dependency.
+The `CalculateDueDate` class's `calculate` method can be used for calculating the due date.
+The turnaround date is can be added as week, day or hour.
 
 ## Quality
 
